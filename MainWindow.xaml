@@ -1,0 +1,193 @@
+﻿<Window x:Class="PasswordManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PasswordManager"
+        mc:Ignorable="d"
+        Title="Password Manager" Height="600" Width="900"
+        Background="#1E1E1E">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Input Form -->
+        <Border Grid.Row="0" Background="#2D2D30" CornerRadius="5" Padding="20" Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Add New Password" 
+                          FontSize="20" 
+                          FontWeight="Bold" 
+                          Foreground="White" 
+                          Margin="0,0,0,15"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Site Name" Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                        <TextBox x:Name="SiteNameTextBox" 
+                                Background="#3E3E42" 
+                                Foreground="White" 
+                                BorderBrush="#555555"
+                                Padding="8"
+                                FontSize="14"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                        <TextBlock Text="Username" Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                        <TextBox x:Name="UsernameTextBox" 
+                                Background="#3E3E42" 
+                                Foreground="White" 
+                                BorderBrush="#555555"
+                                Padding="8"
+                                FontSize="14"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                        <TextBlock Text="Password" Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                        <PasswordBox x:Name="PasswordBox" 
+                                    Background="#3E3E42" 
+                                    Foreground="White" 
+                                    BorderBrush="#555555"
+                                    Padding="8"
+                                    FontSize="14"/>
+                    </StackPanel>
+                    
+                    <Button Grid.Column="3" 
+                           x:Name="SaveButton"
+                           Content="Save" 
+                           Click="SaveButton_Click"
+                           Background="#007ACC" 
+                           Foreground="White" 
+                           BorderThickness="0"
+                           Padding="30,0"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Cursor="Hand"
+                           VerticalAlignment="Bottom"
+                           Height="34">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#007ACC"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" 
+                                                   CornerRadius="3">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                                VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#1C97EA"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Saved Passwords List -->
+        <Border Grid.Row="1" Background="#2D2D30" CornerRadius="5" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="Saved Passwords" 
+                          FontSize="20" 
+                          FontWeight="Bold" 
+                          Foreground="White" 
+                          Margin="0,0,0,15"/>
+                
+                <ListView x:Name="PasswordsListView" 
+                         Grid.Row="1"
+                         Background="#252526" 
+                         Foreground="White"
+                         BorderBrush="#555555">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Site" Width="200" DisplayMemberBinding="{Binding Site}"/>
+                            <GridViewColumn Header="Username" Width="200" DisplayMemberBinding="{Binding Username}"/>
+                            <GridViewColumn Header="Password" Width="200" DisplayMemberBinding="{Binding Password}"/>
+                            <GridViewColumn Header="Actions" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Delete" 
+                                               Click="DeleteButton_Click"
+                                               Tag="{Binding Id}"
+                                               Background="#C42B1C" 
+                                               Foreground="White" 
+                                               BorderThickness="0"
+                                               Padding="20,5"
+                                               FontSize="12"
+                                               Cursor="Hand">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="#C42B1C"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" 
+                                                                       CornerRadius="3">
+                                                                    <ContentPresenter HorizontalAlignment="Center" 
+                                                                                    VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#E81123"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Background" Value="#2D2D30"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Padding" Value="10,5"/>
+                            <Setter Property="BorderBrush" Value="#555555"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Background" Value="#252526"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="#3E3E42"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#3E3E42"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#007ACC"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Resources>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
